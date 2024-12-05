@@ -14,23 +14,24 @@ echo "============================"
 echo "Starting ENC_tool Installation..."
 echo "============================"
 
-# Cài đặt dos2unix (nếu chưa cài đặt)
-echo "Step 1: Installing dos2unix (if not installed)..."
-sudo apt install dos2unix -y
+# Step 1: Ensure dos2unix is installed
+echo "Step 1: Installing dos2unix..."
+sudo apt update -y && sudo apt install dos2unix -y
 if [ $? -ne 0 ]; then
     echo "Error: Failed to install dos2unix. Please check your system."
     exit 1
 fi
 
-# Chuyển đổi tập lệnh sang định dạng Unix (LF line endings)
-echo "Step 2: Converting script to Unix line endings..."
-dos2unix setup_enc_tool.sh
+# Step 2: Convert this script and other files to Unix format
+echo "Step 2: Converting scripts to Unix format..."
+dos2unix "$0"
+dos2unix ENC_tool.py
 if [ $? -ne 0 ]; then
-    echo "Error: Failed to convert script to Unix line endings."
+    echo "Error: Failed to convert files. Please check your system."
     exit 1
 fi
 
-# Step 3: Update the package list and install python3-venv
+# Step 3: Update package list and install python3-venv
 echo "Step 3: Updating package list and installing python3-venv..."
 sudo apt update -y && sudo apt install python3-venv -y
 if [ $? -ne 0 ]; then
@@ -38,7 +39,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# Step 4: Create a virtual environment
+# Step 4: Create a Python virtual environment
 echo "Step 4: Creating a Python virtual environment..."
 python3 -m venv venv
 if [ $? -ne 0 ]; then
@@ -53,6 +54,17 @@ if [ $? -ne 0 ]; then
     echo "Error: Failed to activate the virtual environment."
     exit 1
 fi
+
+# Step 6: Install required Python libraries
+echo "Step 6: Installing required Python libraries..."
+pip install --upgrade pip
+pip install pycryptodome prettytable
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to install required Python libraries."
+    deactivate
+    exit 1
+fi
+
 
 # ============================
 # Section 2: Copy ENC_tool Code
