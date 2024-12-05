@@ -14,39 +14,54 @@ echo "============================"
 echo "Starting ENC_tool Installation..."
 echo "============================"
 
-# Step 1: Update the package list and install python3-venv
-echo "Step 1: Updating package list and installing python3-venv..."
+# Step 1: Install dos2unix (if not installed)
+echo "Step 1: Installing dos2unix (if not installed)..."
+sudo apt update -y && sudo apt install dos2unix -y
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to install dos2unix. Please check your system."
+    exit 1
+fi
+
+# Step 2: Convert script to Unix format using dos2unix
+echo "Step 2: Converting the script to Unix format..."
+dos2unix "$0"
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to convert the script. Please check your system."
+    exit 1
+fi
+
+# Step 3: Update the package list and install python3-venv
+echo "Step 3: Updating package list and installing python3-venv..."
 sudo apt update -y && sudo apt install python3-venv -y
 if [ $? -ne 0 ]; then
     echo "Error: Failed to install python3-venv. Please check your system."
     exit 1
 fi
 
-# Step 2: Create a virtual environment
-echo "Step 2: Creating a Python virtual environment..."
+# Step 4: Create a virtual environment
+echo "Step 4: Creating a Python virtual environment..."
 python3 -m venv venv
 if [ $? -ne 0 ]; then
     echo "Error: Failed to create a virtual environment."
     exit 1
 fi
 
-# Step 3: Activate the virtual environment
-echo "Step 3: Activating the virtual environment..."
+# Step 5: Activate the virtual environment
+echo "Step 5: Activating the virtual environment..."
 source venv/bin/activate
 if [ $? -ne 0 ]; then
     echo "Error: Failed to activate the virtual environment."
     exit 1
 fi
 
-# Step 4: Install required Python libraries
-echo "Step 4: Installing required Python libraries..."
+# Step 6: Install required Python libraries
+echo "Step 6: Installing required Python libraries..."
 pip install pycryptodome prettytable
 if [ $? -ne 0 ]; then
     echo "Error: Failed to install required Python libraries."
     deactivate
     exit 1
 fi
-
 # ============================
 # Section 2: Copy ENC_tool Code
 # ============================
