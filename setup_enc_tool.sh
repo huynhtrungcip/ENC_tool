@@ -14,19 +14,19 @@ echo "============================"
 echo "Starting ENC_tool Installation..."
 echo "============================"
 
-# Step 1: Install dos2unix (if not installed)
+# Cài đặt dos2unix (nếu chưa cài đặt)
 echo "Step 1: Installing dos2unix (if not installed)..."
-sudo apt update -y && sudo apt install dos2unix -y
+sudo apt install dos2unix -y
 if [ $? -ne 0 ]; then
     echo "Error: Failed to install dos2unix. Please check your system."
     exit 1
 fi
 
-# Step 2: Convert script to Unix format using dos2unix
-echo "Step 2: Converting the script to Unix format..."
-dos2unix "$0"
+# Chuyển đổi tập lệnh sang định dạng Unix (LF line endings)
+echo "Step 2: Converting script to Unix line endings..."
+dos2unix setup_enc_tool.sh
 if [ $? -ne 0 ]; then
-    echo "Error: Failed to convert the script. Please check your system."
+    echo "Error: Failed to convert script to Unix line endings."
     exit 1
 fi
 
@@ -54,14 +54,6 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# Step 6: Install required Python libraries
-echo "Step 6: Installing required Python libraries..."
-pip install pycryptodome prettytable
-if [ $? -ne 0 ]; then
-    echo "Error: Failed to install required Python libraries."
-    deactivate
-    exit 1
-fi
 # ============================
 # Section 2: Copy ENC_tool Code
 # ============================
