@@ -14,7 +14,7 @@ echo "============================"
 echo "Starting ENC_tool Installation..."
 echo "============================"
 
-# Step 1: Update package list and install python3-venv
+# Step 1: Update the package list and install python3-venv
 echo "Step 1: Updating package list and installing python3-venv..."
 sudo apt update -y && sudo apt install python3-venv -y
 if [ $? -ne 0 ]; then
@@ -321,8 +321,8 @@ def main():
             print(f"Error: {e}. Please try again.")
 
 if __name__ == "__main__":
-print_title()    
-main()
+	print_title()    
+	main()
 
 EOF
 
@@ -343,5 +343,6 @@ echo "source venv/bin/activate"
 echo "python ENC_tool.py"
 echo "--------------------------------------------"
 
-# Deactivate virtual environment for safety
+# Deactivate the virtual environment
+echo "Deactivating the virtual environment..."
 deactivate
