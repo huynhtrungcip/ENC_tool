@@ -78,9 +78,8 @@ from Crypto.Cipher import AES, DES
 from Crypto.Util.Padding import pad, unpad
 import codecs
 from prettytable import PrettyTable
-
 def print_title():
-    title = """
+    title = """ 
     ============================
          ███████╗███╗   ██╗ ██████╗       
          ██╔════╝████╗  ██║██╔════╝       
@@ -89,7 +88,7 @@ def print_title():
          ███████╗██║ ╚████║╚██████╔╝      
          ╚══════╝╚═╝  ╚═══╝ ╚═════╝       
     ============================ 
-    Encode/Encrypt Version 1.0 by Trung Huynh
+    # Encode/Encrypt Version 1.0 by Your Name
     """
     print(title)
 # ============================
