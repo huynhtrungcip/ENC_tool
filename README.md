@@ -41,6 +41,7 @@
 
 2. Run the setup script:  
     ```bash
+    dos2unix setup_enc_tool.sh
     chmod +x setup_enc_tool.sh
     ./setup_enc_tool.sh
     ```  
