@@ -2,7 +2,7 @@
 
 # ============================
 # Script: Install ENC_tool
-# Author: Trung Huynh
+# Author: Trung Huynh - Beast Hunter
 # Version: 1.0
 # ============================
 
@@ -10,39 +10,50 @@
 # Section 1: Environment Setup
 # ============================
 
-echo "============================"
-echo "Starting ENC_tool Installation..."
-echo "============================"
+# Colors
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+echo -e "${BLUE}============================"
+echo -e "Starting ENC_tool Installation..."
+echo -e "============================${NC}"
 
 # Step 1: Update the package list and install python3-venv
-echo "Step 1: Updating package list and installing python3-venv..."
+echo -e "${YELLOW}Step 1: Updating package list and installing python3-venv...${NC}"
 sudo apt update -y && sudo apt install python3-venv -y
 if [ $? -ne 0 ]; then
-    echo "Error: Failed to install python3-venv. Please check your system."
+    echo -e "${RED}Error: Failed to install python3-venv. Please check your system.${NC}"
     exit 1
 fi
 
 # Step 2: Create a virtual environment
-echo "Step 2: Creating a Python virtual environment..."
+echo -e "${YELLOW}Step 2: Creating a Python virtual environment...${NC}"
 python3 -m venv venv
 if [ $? -ne 0 ]; then
-    echo "Error: Failed to create a virtual environment."
+    echo -e "${RED}Error: Failed to create a virtual environment.${NC}"
     exit 1
 fi
 
 # Step 3: Activate the virtual environment
-echo "Step 3: Activating the virtual environment..."
+echo -e "${YELLOW}Step 3: Activating the virtual environment...${NC}"
 source venv/bin/activate
 if [ $? -ne 0 ]; then
-    echo "Error: Failed to activate the virtual environment."
+    echo -e "${RED}Error: Failed to activate the virtual environment.${NC}"
     exit 1
 fi
 
 # Step 4: Install required Python libraries
-echo "Step 4: Installing required Python libraries..."
+echo -e "${YELLOW}Step 4: Installing required Python libraries...${NC}"
 pip install pycryptodome prettytable
+echo "Installing colorama..."
+pip install colorama
+
+echo "colorama installation complete!"
 if [ $? -ne 0 ]; then
-    echo "Error: Failed to install required Python libraries."
+    echo -e "${RED}Error: Failed to install required Python libraries.${NC}"
     deactivate
     exit 1
 fi
@@ -51,7 +62,7 @@ fi
 # Section 2: Copy ENC_tool Code
 # ============================
 
-echo "Copying ENC_tool code to the current directory..."
+echo -e "${GREEN}Copying ENC_tool code to the current directory...${NC}"
 cat <<EOF > ENC_tool.py
 import base64
 import binascii
@@ -59,8 +70,9 @@ from Crypto.Cipher import AES, DES
 from Crypto.Util.Padding import pad, unpad
 import codecs
 from prettytable import PrettyTable
+from colorama import Fore, Back, Style, init
 def print_title():
-    title = """
+    title = f"""
     ============================
          ███████╗███╗   ██╗ ██████╗       
          ██╔════╝████╗  ██║██╔════╝       
@@ -69,7 +81,7 @@ def print_title():
          ███████╗██║ ╚████║╚██████╔╝      
          ╚══════╝╚═╝  ╚═══╝ ╚═════╝       
     ============================ 
-    Encode/Encrypt Version 1.0 by Your Name
+     {Fore.CYAN + Style.BRIGHT}Encode/Encrypt Version 1.0 by Beast Hunter{Style.RESET_ALL}
     """
     print(title)
 # Section 1: Utility Functions
@@ -240,30 +252,37 @@ def decode_text(text, method, key=None):
     elif method == "des":
         return decode_des(text, key)
 
-def main_menu():
-    menu_table = PrettyTable()
-    menu_table.field_names = ["Option", "Description"]
-    menu_table.align["Option"] = "l"
-    menu_table.align["Description"] = "l"
+init(autoreset=True)
 
-    menu_table.add_row(["1", "Base64 Encode/Decode"])
-    menu_table.add_row(["2", "Hex Encode/Decode"])
-    menu_table.add_row(["3", "Morse Code Encode/Decode"])
-    menu_table.add_row(["4", "Caesar Cipher Encode/Decode"])
-    menu_table.add_row(["5", "Vigenère Cipher Encode/Decode"])
-    menu_table.add_row(["6", "ROT13 Encode/Decode"])
-    menu_table.add_row(["7", "ROT47 Encode/Decode"])
-    menu_table.add_row(["8", "XOR Cipher Encode/Decode"])
-    menu_table.add_row(["9", "AES Encode/Decode"])
-    menu_table.add_row(["10", "DES Encode/Decode"])
-    menu_table.add_row(["0", "Exit"])
-    
+def main_menu():
+    # Create menu board
+    menu_table = PrettyTable()
+    menu_table.field_names = [f"{Fore.GREEN}Option", f"{Fore.CYAN}Description"]
+    menu_table.align["Option"] = "l"  
+    menu_table.align["Description"] = "l"  
+    menu_table.max_width["Description"] = 70  
+    menu_table.max_width["Option"] = 6  
+
+    # Add rows to the menu table
+    menu_table.add_row([f"{Fore.YELLOW}1", f"{Fore.WHITE}Base64 Encode/Decode"])
+    menu_table.add_row([f"{Fore.YELLOW}2", f"{Fore.WHITE}Hex Encode/Decode"])
+    menu_table.add_row([f"{Fore.YELLOW}3", f"{Fore.WHITE}Morse Code Encode/Decode"])
+    menu_table.add_row([f"{Fore.YELLOW}4", f"{Fore.WHITE}Caesar Cipher Encode/Decode"])
+    menu_table.add_row([f"{Fore.YELLOW}5", f"{Fore.WHITE}Vigenère Cipher Encode/Decode"])
+    menu_table.add_row([f"{Fore.YELLOW}6", f"{Fore.WHITE}ROT13 Encode/Decode"])
+    menu_table.add_row([f"{Fore.YELLOW}7", f"{Fore.WHITE}ROT47 Encode/Decode"])
+    menu_table.add_row([f"{Fore.YELLOW}8", f"{Fore.WHITE}XOR Cipher Encode/Decode"])
+    menu_table.add_row([f"{Fore.YELLOW}9", f"{Fore.WHITE}AES Encode/Decode"])
+    menu_table.add_row([f"{Fore.YELLOW}10", f"{Fore.WHITE}DES Encode/Decode"])
+    menu_table.add_row([f"{Fore.RED}0", f"{Fore.WHITE}Exit"])
+
+    # Print boards with colors and effects
     print("\n")
-    print("=" * 40)
-    print("          ENCODE/ENCRYPT TOOL")
-    print("=" * 40)
+    print(Fore.MAGENTA + "=" * 40)
+    print(Fore.YELLOW + "          ENCODE/ENCRYPT TOOL")
+    print(Fore.MAGENTA + "=" * 40)
     print(menu_table)
-    print("=" * 40)
+    print(Fore.MAGENTA + "=" * 40)
 
 def main():
     while True:
@@ -335,13 +354,17 @@ fi
 # ============================
 # Section 3: Finishing Setup
 # ============================
+# Final notification after installation
+echo -e "${GREEN}[✔] ENC_tool Installation Completed Successfully!${NC}"
+echo -e "${YELLOW}To run the tool, use the following commands:${NC}"
+echo -e "${RED}--------------------------------------------${NC}"
+echo -e "${BOLD}${GREEN}source venv/bin/activate${NC}"
+echo -e "${BOLD}${GREEN}python ENC_tool.py${NC}"
+echo -e "${RED}--------------------------------------------${NC}"
+echo -e "${YELLOW}Deactivating the virtual environment...${NC}"
+echo ""
+echo -e "${YELLOW}You are ready to go! Enjoy using ENC_tool.${NC}"
 
-echo "ENC_tool Installation Completed Successfully!"
-echo "To run the tool, use the following commands:"
-echo "--------------------------------------------"
-echo "source venv/bin/activate"
-echo "python ENC_tool.py"
-echo "--------------------------------------------"
 
 # Deactivate the virtual environment
 echo "Deactivating the virtual environment..."
