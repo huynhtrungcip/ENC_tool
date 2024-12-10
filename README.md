@@ -127,8 +127,12 @@ Developed with ❤️ [Trung Huynh](https://www.linkedin.com/in/trung-huynh-chi-
 
 🔗 LinkedIn Profile [Trung Huynh](https://www.linkedin.com/in/trung-huynh-chi-pc01/)
 📧 For inquiries, contact via LinkedIn or GitHub, email: huynhchitrungcip@gmail.com
-### 📜 License
-This project is licensed under the MIT License. See the LICENSE file for more details.
+
+## 📄 License
+
+This repository is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for more details.
+
+---
 
 ### 🌟 Support the Project
 If you find this tool useful, give it a ⭐ on GitHub!
